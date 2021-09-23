@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { validate } from "./validate";
 import { notify } from "./toast";
+import styles from "./SignUp.module.css";
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -43,7 +44,7 @@ const SignUp = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     if (!Object.keys(errors).length) {
-      notify("You signed in successfully", "success");
+      notify("You signed up successfully", "success");
     } else {
       notify("Invalid data!", "error");
       setTouched({
@@ -57,12 +58,17 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <h2>SignUp</h2>
-        <div>
+    <div className={styles.container}>
+      <form onSubmit={submitHandler} className={styles.formContainer}>
+        <h2 className={styles.header}>SignUp</h2>
+        <div className={styles.formField}>
           <label>Name</label>
           <input
+            className={
+              errors.name && touched.name
+                ? styles.uncompleted
+                : styles.formInput
+            }
             type="text"
             name="name"
             value={data.name}
@@ -71,9 +77,14 @@ const SignUp = () => {
           />
           {errors.name && touched.name && <span>{errors.name}</span>}
         </div>
-        <div>
+        <div className={styles.formField}>
           <label>Email</label>
           <input
+            className={
+              errors.email && touched.email
+                ? styles.uncompleted
+                : styles.formInput
+            }
             type="email"
             name="email"
             value={data.email}
@@ -82,9 +93,14 @@ const SignUp = () => {
           />
           {errors.email && touched.email && <span>{errors.email}</span>}
         </div>
-        <div>
+        <div className={styles.formField}>
           <label>password</label>
           <input
+            className={
+              errors.password && touched.password
+                ? styles.uncompleted
+                : styles.formInput
+            }
             type="password"
             name="password"
             value={data.password}
@@ -95,9 +111,14 @@ const SignUp = () => {
             <span>{errors.password}</span>
           )}
         </div>
-        <div>
+        <div className={styles.formField}>
           <label>Confirm Password</label>
           <input
+            className={
+              errors.confirmPassword && touched.confirmPassword
+                ? styles.uncompleted
+                : styles.formInput
+            }
             type="password"
             name="confirmPassword"
             value={data.confirmPassword}
@@ -108,20 +129,23 @@ const SignUp = () => {
             <span>{errors.confirmPassword}</span>
           )}
         </div>
-        <div>
-          <label>I accepted terms of privacy policy</label>
-          <input
-            type="checkbox"
-            name="isAccepted"
-            value={data.isAccepted}
-            onChange={changeHandler}
-            onFocus={focusHandler}
-          />
+        <div className={styles.formField}>
+          <div className={styles.checkBoxContainer}>
+            <label>I accepted terms of privacy policy</label>
+            <input
+              type="checkbox"
+              name="isAccepted"
+              value={data.isAccepted}
+              onChange={changeHandler}
+              onFocus={focusHandler}
+            />
+          </div>
+
           {errors.isAccepted && touched.isAccepted && (
             <span>{errors.isAccepted}</span>
           )}
         </div>
-        <div>
+        <div className={styles.formButtons}>
           <a href=" # ">Login</a>
           <button type="submit">Sign Up</button>
         </div>
